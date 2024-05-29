@@ -10,7 +10,7 @@ import lombok.*;
 @Entity
 @Table(name = "roles")
 
-public class RolesEntity {
+public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // eshte best practice per te perdorur tip te dhene Long ne vend te Integer per primary keys
