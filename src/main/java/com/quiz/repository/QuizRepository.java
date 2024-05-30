@@ -8,8 +8,8 @@ import java.util.List;
 @Repository
 public interface QuizRepository {
     void save(QuizEntity quiz);
-    QuizEntity getOption(Long id);
+    QuizEntity findById(Long id);
     void update(QuizEntity quiz);
-    List<QuizEntity> getAllOptions();
+    List<QuizEntity> findAll();
     void delete(Long id);
 }

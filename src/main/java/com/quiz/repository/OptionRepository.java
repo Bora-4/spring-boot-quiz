@@ -8,8 +8,8 @@ import java.util.List;
 @Repository
 public interface OptionRepository {
     void save(OptionEntity option);
-    OptionEntity getOption(Long id);
+    OptionEntity findById(Long id);
     void update(OptionEntity option);
-    List<OptionEntity> getAllOptions();
+    List<OptionEntity> findAll();
     void delete(Long id);
 }

@@ -9,8 +9,8 @@ import java.util.List;
 @Repository
 public interface QuizResultRepository {
     void save(QuizResultEntity quizResult);
-    QuizResultEntity getOption(Long id);
+    QuizResultEntity findById(Long id);
     void update(QuizResultEntity quizResult);
-    List<QuizResultEntity> getAllOptions();
+    List<QuizResultEntity> findAll();
     void delete(Long id);
 }
