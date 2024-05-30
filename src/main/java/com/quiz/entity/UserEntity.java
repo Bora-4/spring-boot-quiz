@@ -50,7 +50,7 @@ public class UserEntity {
         this.updatedAt = LocalDateTime.now();
     }
 
-    @PostPersist
+    @PreUpdate
     protected void onUpdate(){
         this.updatedAt = LocalDateTime.now();
     }
