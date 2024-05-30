@@ -3,6 +3,8 @@ package com.quiz.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Collection;
+
 @Builder
 @AllArgsConstructor @NoArgsConstructor
 @Getter
@@ -17,4 +19,7 @@ public class RoleEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
+
+    @ManyToMany(mappedBy = "roles")
+    private Collection<UserEntity> users;
 }
