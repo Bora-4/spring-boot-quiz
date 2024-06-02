@@ -15,11 +15,9 @@ public class UserDTO {
     private String username;
     private String password;
     private String email;
-    private String token;
-    private String tokenExpiryDate;
-    private Set<RoleDTO> roles;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Boolean enabled;
 
 
 

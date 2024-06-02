@@ -1,10 +1,7 @@
 package com.quiz.mapper;
 
 import com.quiz.dto.UserDTO;
-import com.quiz.entity.RoleEntity;
 import com.quiz.entity.UserEntity;
-
-import java.util.stream.Collectors;
 
 public class UserMapper {
     private UserMapper(){
@@ -17,6 +14,9 @@ public class UserMapper {
         user.setEmail(userDTO.getEmail());
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
+        user.setCreatedAt(userDTO.getCreatedAt());
+        user.setUpdatedAt(userDTO.getUpdatedAt());
+        user.setEnabled(userDTO.getEnabled());
 
         return user;
     }
@@ -24,11 +24,12 @@ public class UserMapper {
     public static UserDTO toDTO(UserEntity user){
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
-        userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
-        //shiko nje menyre per te vendosur role
+        userDTO.setUsername(user.getUsername());
+        userDTO.setPassword(user.getPassword());
         userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setUpdatedAt(user.getUpdatedAt());
+//        userDTO.setEnabled(user.getEnabled()); me jep warning kur e vendos
         return userDTO;
     }
 
