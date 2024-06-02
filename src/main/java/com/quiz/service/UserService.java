@@ -1,9 +1,10 @@
 package com.quiz.service;
 
-import com.quiz.entity.UserEntity;
+import com.quiz.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
-    void save(UserEntity user);
+    void save(UserDTO user);
+    UserDTO findByUsername(String username);
 }
