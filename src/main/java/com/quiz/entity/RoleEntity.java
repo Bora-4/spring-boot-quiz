@@ -3,7 +3,7 @@ package com.quiz.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Collection;
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor @NoArgsConstructor
@@ -21,5 +21,6 @@ public class RoleEntity {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    private Collection<UserEntity> users;
+    @ToString.Exclude
+    private Set<UserEntity> users;
 }
