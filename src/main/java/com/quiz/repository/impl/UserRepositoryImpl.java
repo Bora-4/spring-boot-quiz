@@ -4,9 +4,11 @@ import com.quiz.entity.UserEntity;
 import com.quiz.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class UserRepositoryImpl implements UserRepository {
     @PersistenceContext
     EntityManager em;
@@ -16,7 +18,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public UserEntity findUserByUsername(String username) {
+    public UserEntity findByUsername(String username) {
         return em.find(UserEntity.class, username);
     }
 
