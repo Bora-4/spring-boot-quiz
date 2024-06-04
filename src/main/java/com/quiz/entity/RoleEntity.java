@@ -20,7 +20,15 @@ public class RoleEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    @ToString.Exclude
-    private Set<UserEntity> users;
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserRole> userRoles;
+
+    @Override
+    public String toString() {
+        return "RoleEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", userRoles=" + userRoles +
+                '}';
+    }
 }

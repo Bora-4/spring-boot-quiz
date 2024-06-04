@@ -2,8 +2,10 @@ package com.quiz.mapper;
 
 import com.quiz.dto.RoleDTO;
 import com.quiz.dto.UserDTO;
+import com.quiz.dto.UserRoleDTO;
 import com.quiz.entity.RoleEntity;
 import com.quiz.entity.UserEntity;
+import com.quiz.entity.UserRole;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,10 +24,11 @@ public class UserMapper {
         user.setCreatedAt(userDTO.getCreatedAt());
         user.setUpdatedAt(userDTO.getUpdatedAt());
         user.setEnabled(userDTO.getEnabled());
-        Set<RoleEntity> roleEntities = userDTO.getRoles().stream()
-                .map(UserMapper::toRoleEntity)
-                .collect(Collectors.toSet());
-        user.setRoles(roleEntities);
+        Set<UserRole> userRoles = userDTO.getRoles().stream()
+                    .map(roleDTO -> toUserRoleEntity(new UserRoleDTO(), user, toRoleEntity(roleDTO)))
+                    .collect(Collectors.toSet());
+        user.setUserRoles(userRoles);
+
         return user;
     }
 
@@ -37,15 +40,29 @@ public class UserMapper {
         userDTO.setPassword(user.getPassword());
         userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setUpdatedAt(user.getUpdatedAt());
-
-        Set<RoleDTO> roleDTOs = user.getRoles().stream()
-                .map(UserMapper::toRoleDTO)
+        Set<RoleDTO> roles = user.getUserRoles().stream()
+                .map(userRole -> toRoleDTO(userRole.getRole()))
                 .collect(Collectors.toSet());
-        userDTO.setRoles(roleDTOs);
-
+        userDTO.setRoles(roles);
         userDTO.setEnabled(user.getEnabled());
 
         return userDTO;
+    }
+
+    public static UserRole toUserRoleEntity(UserRoleDTO userRoleDTO, UserEntity user, RoleEntity role){
+        UserRole userRole = new UserRole();
+        userRole.setId(userRoleDTO.getId());
+        userRole.setRole(role);
+        userRole.setUser(user);
+        return userRole;
+    }
+
+    public static UserRoleDTO toUserRoleDTO(UserRole userRole){
+        UserRoleDTO userRoleDTO = new UserRoleDTO();
+        userRoleDTO.setId(userRole.getId());
+        userRoleDTO.setUser(UserMapper.toDTO(userRole.getUser()));
+        userRoleDTO.setRole(UserMapper.toRoleDTO(userRole.getRole()));
+        return userRoleDTO;
     }
 
     public static RoleDTO toRoleDTO(RoleEntity role){

@@ -30,15 +30,8 @@ public class UserEntity implements Serializable {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id")
-    )
-    private Set<RoleEntity> roles;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserRole> userRoles;
 
 
     private Boolean enabled;
@@ -56,7 +49,8 @@ public class UserEntity implements Serializable {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", roles=" + roles +
+                ", userRoles=" + userRoles +
+                ", enabled=" + enabled +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
