@@ -35,6 +35,6 @@ public class QuizRepositoryImpl implements QuizRepository {
 
     @Override
     public void delete(Long id) {
-        em.remove(id);
+        em.remove(findById(id));
     }
 }

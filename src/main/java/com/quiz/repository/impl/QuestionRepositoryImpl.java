@@ -35,6 +35,6 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
     @Override
     public void delete(Long id) {
-        em.remove(id);
+        em.remove(findById(id));
     }
 }

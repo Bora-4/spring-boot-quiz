@@ -33,7 +33,7 @@ public class UserEntity implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserRole> userRoles;
 
-
+    @Column(nullable = false)
     private Boolean enabled;
 
     @Column(name = "created_at", nullable = false, updatable = false)

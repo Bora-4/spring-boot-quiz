@@ -11,5 +11,5 @@ public interface QuestionService {
     QuestionDTO findById(Long id);
     void update(QuestionDTO questionDTO);
     List<QuestionDTO> findAll();
-    void delete(long id);
+    void delete(Long id);
 }
