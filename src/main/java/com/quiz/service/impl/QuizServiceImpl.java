@@ -25,13 +25,13 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public void save(QuizDTO quizDTO) {
-        UserEntity user = userRepository.findByUsername(quizDTO.getUser().getUsername());
+        UserEntity user = userRepository.findById(quizDTO.getUser().getId());
         if(user != null){
             QuizEntity quiz = QuizMapper.toEntity(quizDTO, user);
             quizRepository.save(quiz);
         }
         else {
-            throw new RuntimeException("User with username \""+quizDTO.getUser().getUsername()+"\" does not exist");
+            throw new RuntimeException("User with id \""+quizDTO.getUser().getId()+"\" does not exist");
         }
     }
 

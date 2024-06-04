@@ -30,9 +30,9 @@ public class UserController {
     public ResponseEntity<List<UserDTO>> findAll(){
         return ResponseEntity.ok(userService.findAll());
     }
-    @GetMapping("username/{username}")
-    public UserDTO findByUsername(@PathVariable("username") String username){
-        return userService.findByUsername(username);
+    @GetMapping("id/{id}")
+    public UserDTO findByUsername(@PathVariable("id") Long id){
+        return userService.findById(id);
     }
 
     @DeleteMapping("id/{id}")

@@ -29,21 +29,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findByUsername(String username) {
-        UserEntity user = this.userRepository.findByUsername(username);
+    public UserDTO findById(Long id) {
+        UserEntity user = this.userRepository.findById(id);
         if(user != null){
             return UserMapper.toDTO(user);
         }
-        throw new RuntimeException("User with username \"" +username+"\" does not exist. ");
+        throw new RuntimeException("User with username \"" +id+"\" does not exist. ");
     }
 
     @Override
     public void update(UserDTO userDTO) {
-        UserEntity user = this.userRepository.findByUsername(userDTO.getUsername());
+        UserEntity user = this.userRepository.findById(userDTO.getId());
         if(user != null){
             this.userRepository.update(user);
         }
-        throw new RuntimeException("User with username \"" +userDTO.getUsername()+"\" does not exist. ");
+        throw new RuntimeException("User with username \"" +userDTO.getId()+"\" does not exist. ");
 
     }
 

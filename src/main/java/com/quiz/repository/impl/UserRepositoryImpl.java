@@ -18,8 +18,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public UserEntity findByUsername(String username) {
-        return em.find(UserEntity.class, username);
+    public UserEntity findById(Long id) {
+        return em.find(UserEntity.class, id);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<UserEntity> findAll() {
-        return em.createQuery("SELECT u FROM UserEntity u WHERE u.username = :username", UserEntity.class)
+        return em.createQuery("SELECT u FROM UserEntity u", UserEntity.class)
                 .getResultList();
     }
 

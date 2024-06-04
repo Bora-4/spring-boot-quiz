@@ -31,7 +31,7 @@ public class QuizResultsServiceImpl implements QuizResultService {
     @Override
     public void save(QuizResultDTO quizResultDTO) {
         QuizEntity quiz = quizRepository.findById(quizResultDTO.getQuiz().getId());
-        UserEntity user = userRepository.findByUsername(quizResultDTO.getUser().getUsername());
+        UserEntity user = userRepository.findById(quizResultDTO.getUser().getId());
         if( quiz != null && user != null){
             QuizResultEntity quizResult = QuizResultMapper.toEntity(quizResultDTO, user, quiz);
             this.quizResultRepository.save(quizResult);

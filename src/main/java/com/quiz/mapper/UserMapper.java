@@ -29,7 +29,6 @@ public class UserMapper {
         userDTO.setPassword(user.getPassword());
         userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setUpdatedAt(user.getUpdatedAt());
-//        userDTO.setEnabled(user.getEnabled()); me jep warning kur e vendos
         return userDTO;
     }
 
