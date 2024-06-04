@@ -18,7 +18,6 @@ public class UserDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean enabled;
-
-
+    private Set<RoleDTO> roles;
 
 }

@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         if(user != null){
             return UserMapper.toDTO(user);
         }
-        throw new RuntimeException("User with username \"" +id+"\" does not exist. ");
+        throw new RuntimeException("User with id " +id+" does not exist. ");
     }
 
     @Override
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         if(user != null){
             this.userRepository.update(user);
         }
-        throw new RuntimeException("User with username \"" +userDTO.getId()+"\" does not exist. ");
+        throw new RuntimeException("User with id " +userDTO.getId()+" does not exist. ");
 
     }
 
