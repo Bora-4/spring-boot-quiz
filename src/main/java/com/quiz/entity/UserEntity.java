@@ -1,6 +1,8 @@
 package com.quiz.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.io.Serializable;
@@ -21,14 +23,17 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
+    @NotNull(message = "{validation.entity.users.username}")
+    @Size(min = 8, max = 20, message = "Username should be 8-20 characters long.")
     private String username;
 
-    @Column(nullable = false, unique = false)
+    @NotNull(message = "{validation.entity.users.password}")
     @ToString.Exclude
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column( unique = true)
+    @NotNull(message = "{validation.entity.users.email}")
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -1,6 +1,7 @@
 package com.quiz.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -20,10 +21,11 @@ public class OptionEntity {
     @JoinColumn(name = "question_id", nullable = false)
     private QuestionEntity question;
 
-    @Column(nullable = false)
+    @NotNull(message = "{validation.entity.options.alternative}")
     private String alternative;
 
-    @Column(name = "is_correct", nullable = false)
+    @Column(name = "is_correct")
+    @NotNull(message = "{validation.entity.options.isCorrect}")
     private Boolean isCorrect;
 
     @Column(name = "created_at")

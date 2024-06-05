@@ -1,6 +1,7 @@
 package com.quiz.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -22,7 +23,7 @@ public class QuestionEntity {
     @JoinColumn(name = "quiz_id", nullable = false)
     private QuizEntity quiz;
 
-    @Column(nullable = false)
+    @NotNull(message = "{validation.entity.questions.question}")
     private String question;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
