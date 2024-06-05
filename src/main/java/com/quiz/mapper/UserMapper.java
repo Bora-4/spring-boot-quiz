@@ -4,13 +4,17 @@ import com.quiz.dto.RoleDTO;
 import com.quiz.dto.UserDTO;
 import com.quiz.entity.RoleEntity;
 import com.quiz.entity.UserEntity;
+import com.quiz.entity.UserRole;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserMapper {
     private UserMapper() {
         // private constructor
     }
 
-    public static UserEntity toEntity(UserDTO userDTO) {
+    public static UserEntity toEntity(UserDTO userDTO, RoleEntity role) {
         UserEntity user = new UserEntity();
         user.setId(userDTO.getId());
         user.setEmail(userDTO.getEmail());
@@ -19,6 +23,20 @@ public class UserMapper {
         user.setCreatedAt(userDTO.getCreatedAt());
         user.setUpdatedAt(userDTO.getUpdatedAt());
         user.setEnabled(userDTO.getEnabled());
+
+        // Create a new HashSet to hold the user's roles
+        Set<UserRole> userRoles = new HashSet<>();
+
+        // Create a new UserRole entity and set the user and role
+        UserRole userRole = new UserRole();
+        userRole.setUser(user);
+        userRole.setRole(role);
+
+        // Add the UserRole entity to the set of user roles
+        userRoles.add(userRole);
+
+        // Set the user's roles
+        user.setUserRoles(userRoles);
 
         return user;
     }
@@ -33,6 +51,12 @@ public class UserMapper {
         userDTO.setUpdatedAt(user.getUpdatedAt());
         userDTO.setEnabled(user.getEnabled());
 
+        // Map user roles
+        Set<RoleDTO> roleDTOs = new HashSet<>();
+        if (user.getUserRoles() != null) {
+            user.getUserRoles().forEach(userRole -> roleDTOs.add(toRoleDTO(userRole.getRole())));
+        }
+        userDTO.setRoles(roleDTOs);
         return userDTO;
     }
 

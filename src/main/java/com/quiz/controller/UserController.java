@@ -18,9 +18,13 @@ public class UserController {
         this.userService = userService;
     }
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody CreateUserRequest createUserRequest) {
-        userService.save(createUserRequest);
-        return ResponseEntity.ok("User created successfully");
+    public ResponseEntity<String> createUser(@RequestBody UserDTO userDTO, @RequestParam Long roleId) {
+        try {
+            userService.save(userDTO, roleId);
+            return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to create user: " + e.getMessage());
+        }
     }
 
     @PutMapping

@@ -31,33 +31,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(CreateUserRequest createUserRequest) {
-        // Check if the role exists
-        RoleEntity role = roleRepository.findById(createUserRequest.getRoleId())
-                .orElseThrow(() -> new IllegalArgumentException("Role not found"));
+    public void save(UserDTO userDTO, Long roleId) {
+        // Check if user already exists
+        if (userRepository.findById(userDTO.getId()) == null) {
+            // Fetch the role by ID
+            RoleEntity role = roleRepository.findById(roleId)
+                    .orElseThrow(() -> new RuntimeException("Role with id " + roleId + " not found"));
 
-        // Create a new user entity
-        UserEntity user = new UserEntity();
-        user.setEmail(createUserRequest.getEmail());
-        user.setPassword(createUserRequest.getPassword());
-        user.setUsername(createUserRequest.getUsername());
-        user.setEnabled(createUserRequest.isEnabled());
+            // Map the user DTO to entity and add the role
+            UserEntity userEntity = UserMapper.toEntity(userDTO, role);
 
-        // Add the role to the user's roles
-        UserRole userRole = new UserRole();
-        userRole.setUser(user);
-        userRole.setRole(role);
-        user.getUserRoles().add(userRole);
-
-        // Set timestamps
-        LocalDateTime now = LocalDateTime.now();
-        user.setCreatedAt(now);
-        user.setUpdatedAt(now);
-
-        // Save the user
-        userRepository.save(user);
+            // Save the user entity
+            userRepository.save(userEntity);
+        } else {
+            throw new RuntimeException("User with username " + userDTO.getUsername() + " already exists");
+        }
     }
-
 
 
     @Override

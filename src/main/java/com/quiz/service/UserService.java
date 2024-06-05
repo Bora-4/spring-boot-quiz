@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public interface UserService {
-    void save(CreateUserRequest userRequest);
+    void save(UserDTO userDTO, Long roleId);
     UserDTO findById(Long id);
     void update(UserDTO userDTO);
     List<UserDTO> findAll();
