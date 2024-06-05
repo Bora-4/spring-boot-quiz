@@ -13,11 +13,7 @@ import com.quiz.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 
 @Service
 @Transactional
@@ -32,8 +28,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(UserDTO userDTO, Long roleId) {
-        // Check if user already exists
-        if (userRepository.findById(userDTO.getId()) == null) {
             // Fetch the role by ID
             RoleEntity role = roleRepository.findById(roleId)
                     .orElseThrow(() -> new RuntimeException("Role with id " + roleId + " not found"));
@@ -43,9 +37,7 @@ public class UserServiceImpl implements UserService {
 
             // Save the user entity
             userRepository.save(userEntity);
-        } else {
-            throw new RuntimeException("User with username " + userDTO.getUsername() + " already exists");
-        }
+
     }
 
 
