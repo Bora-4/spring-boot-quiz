@@ -25,4 +25,10 @@ public class UserRole implements Serializable {
     @JoinColumn(name = "role_id", nullable = false)
     private RoleEntity role;
 
+    @Override
+    public String toString() {
+        return "UserRole{" +
+                "id=" + id +
+                '}';
+    }
 }

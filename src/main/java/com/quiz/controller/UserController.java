@@ -1,7 +1,9 @@
 package com.quiz.controller;
 
+import com.quiz.dto.CreateUserRequest;
 import com.quiz.dto.UserDTO;
 import com.quiz.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +17,10 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
     @PostMapping
-    public void save(@RequestBody UserDTO userDTO){
-        userService.save(userDTO);
+    public ResponseEntity<String> createUser(@RequestBody CreateUserRequest createUserRequest) {
+        userService.save(createUserRequest);
+        return ResponseEntity.ok("User created successfully");
     }
 
     @PutMapping

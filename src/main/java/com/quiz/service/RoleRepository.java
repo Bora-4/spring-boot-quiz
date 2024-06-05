@@ -1,9 +1,12 @@
 package com.quiz.service;
 
 import com.quiz.entity.RoleEntity;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 @Repository
-public interface RoleRepository {
-    RoleEntity findById(Long id);
+public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
+    Optional<RoleEntity> findById(Long id);
 }
