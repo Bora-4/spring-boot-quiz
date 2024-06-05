@@ -6,10 +6,13 @@ import com.quiz.dto.UserDTO;
 import com.quiz.entity.RoleEntity;
 import com.quiz.entity.UserEntity;
 import com.quiz.entity.UserRole;
+import com.quiz.exceptions.notFound.EntityNotFoundException;
 import com.quiz.mapper.UserMapper;
 import com.quiz.repository.UserRepository;
 import com.quiz.service.RoleRepository;
 import com.quiz.service.UserService;
+import com.quiz.util.PasswordValidator;
+import com.quiz.util.UsernameValidator;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -28,15 +31,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(UserDTO userDTO, Long roleId) {
-            // Fetch the role by ID
-            RoleEntity role = roleRepository.findById(roleId)
-                    .orElseThrow(() -> new RuntimeException("Role with id " + roleId + " not found"));
+        //validate username
+        UsernameValidator.validate(userDTO.getUsername());
+        //validate password
+        PasswordValidator.validate(userDTO.getPassword());
 
-            // Map the user DTO to entity and add the role
-            UserEntity userEntity = UserMapper.toEntity(userDTO, role);
+        //encode the password before saving (nuk e kam bere akoma pjesen e security)
+        //user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-            // Save the user entity
-            userRepository.save(userEntity);
+        // Fetch the role by ID
+        RoleEntity role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new RuntimeException("Role with id " + roleId + " not found"));
+
+        // Map the user DTO to entity and add the role
+        UserEntity userEntity = UserMapper.toEntity(userDTO, role);
+
+        // Save the user entity
+        userRepository.save(userEntity);
 
     }
 
@@ -47,7 +58,7 @@ public class UserServiceImpl implements UserService {
         if(user != null){
             return UserMapper.toDTO(user);
         }
-        throw new RuntimeException("User with id " +id+" does not exist. ");
+        throw new EntityNotFoundException("User with id "+id+ " was not found");
     }
 
     @Override
@@ -56,8 +67,7 @@ public class UserServiceImpl implements UserService {
         if(user != null){
             this.userRepository.update(user);
         }
-        throw new RuntimeException("User with id " +userDTO.getId()+" does not exist. ");
-
+        throw new EntityNotFoundException("User with id "+userDTO.getId()+ " was not found");
     }
 
     @Override

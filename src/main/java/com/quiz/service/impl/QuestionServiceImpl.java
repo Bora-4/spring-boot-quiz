@@ -3,6 +3,7 @@ package com.quiz.service.impl;
 import com.quiz.dto.QuestionDTO;
 import com.quiz.entity.QuestionEntity;
 import com.quiz.entity.QuizEntity;
+import com.quiz.exceptions.notFound.EntityNotFoundException;
 import com.quiz.mapper.QuestionMapper;
 import com.quiz.repository.QuestionRepository;
 import com.quiz.repository.QuizRepository;
@@ -31,7 +32,7 @@ public class QuestionServiceImpl implements QuestionService {
             questionRepository.save(question);
         }
         else{
-            throw new RuntimeException("Quiz with id "+ questionDTO.getQuiz().getId()+" does not exist.");
+            throw new EntityNotFoundException("Quiz with id "+ questionDTO.getQuiz().getId()+" was not found");
         }
     }
 
@@ -41,7 +42,7 @@ public class QuestionServiceImpl implements QuestionService {
         if( question != null){
             return QuestionMapper.toDTO(question);
         } else {
-            throw new RuntimeException("Question with id "+ id + " does not exist.");
+            throw new EntityNotFoundException("Question with id "+ id +" was not found");
         }
     }
 
@@ -51,7 +52,7 @@ public class QuestionServiceImpl implements QuestionService {
         if( question != null){
            questionRepository.update(question);
         } else {
-            throw new RuntimeException("Question with id " + questionDTO.getId() +" does not exist.");
+            throw new EntityNotFoundException("Question with id "+ questionDTO.getId() +" was not found");
         }
     }
 

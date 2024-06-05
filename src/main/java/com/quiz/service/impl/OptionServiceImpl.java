@@ -3,6 +3,7 @@ package com.quiz.service.impl;
 import com.quiz.dto.OptionDTO;
 import com.quiz.entity.OptionEntity;
 import com.quiz.entity.QuestionEntity;
+import com.quiz.exceptions.notFound.EntityNotFoundException;
 import com.quiz.mapper.OptionMapper;
 import com.quiz.repository.OptionRepository;
 import com.quiz.repository.QuestionRepository;
@@ -30,7 +31,7 @@ public class OptionServiceImpl implements OptionService {
             OptionEntity option = OptionMapper.toEntity(optionDTO, question);
             optionRepository.save(option);
         } else {
-            throw new RuntimeException("Question with id "+ optionDTO.getQuestion().getId()+ " does not exist.");
+            throw new EntityNotFoundException("Question with id "+ optionDTO.getQuestion().getId()+ " was not found");
         }
     }
 
@@ -40,7 +41,7 @@ public class OptionServiceImpl implements OptionService {
         if( option != null){
             return OptionMapper.toDTO(option);
         } else {
-            throw new RuntimeException("Option with id "+ id+ " does not exist.");
+            throw new EntityNotFoundException("Option with id "+ id + " was not found");
         }
     }
 
@@ -50,7 +51,7 @@ public class OptionServiceImpl implements OptionService {
         if( option != null){
             optionRepository.update(option);
         } else {
-            throw new RuntimeException("Option with id "+ optionDTO.getId()+" does not exist.");
+            throw new EntityNotFoundException("Option with id "+ optionDTO.getId() + " was not found");
         }
     }
 
