@@ -1,4 +1,4 @@
-package com.quiz.controller;
+package com.quiz.controller.rest;
 
 import com.quiz.dto.OptionDTO;
 import com.quiz.service.OptionService;
