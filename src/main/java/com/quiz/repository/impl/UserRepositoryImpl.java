@@ -23,6 +23,17 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public UserEntity findByUsername(String username) {
+        try {
+            return em.createQuery("SELECT u FROM UserEntity u WHERE u.username = :username", UserEntity.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
     public void update(UserEntity userEntity) {
         em.merge(userEntity);
     }

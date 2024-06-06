@@ -9,6 +9,7 @@ import java.util.List;
 public interface UserRepository {
     void save(UserEntity userEntity);
     UserEntity findById(Long id);
+    UserEntity findByUsername(String username);
     void update(UserEntity userEntity);
     List<UserEntity> findAll();
     void delete(Long id);

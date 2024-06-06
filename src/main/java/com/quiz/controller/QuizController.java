@@ -1,4 +1,4 @@
-package com.quiz.controller.rest;
+package com.quiz.controller;
 
 import com.quiz.dto.QuizDTO;
 import com.quiz.dto.UserDTO;

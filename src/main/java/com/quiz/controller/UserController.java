@@ -1,4 +1,4 @@
-package com.quiz.controller.rest;
+package com.quiz.controller;
 
 import com.quiz.dto.UserDTO;
 import com.quiz.exceptions.notFound.EntityNotFoundException;
@@ -19,19 +19,25 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody UserDTO userDTO, @RequestParam Long roleId) {
+    @PostMapping("/signup")
+    public ResponseEntity<String> signup(@RequestBody UserDTO userDTO, @RequestParam Long roleId) {
         try {
             userService.save(userDTO, roleId);
-            return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
+            return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
         } catch (UsernameRequirementsException | PasswordRequirementsException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to create user: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to register user: " + e.getMessage());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + e.getMessage());
         }
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login() {
+        return ResponseEntity.ok("Logged in successfully");
+    }
+
 
     @PutMapping
     public ResponseEntity<String> update(@RequestBody UserDTO userDTO){
@@ -66,15 +72,27 @@ public class UserController {
         }
     }
 
+    @GetMapping("/username/{username}")
+    public ResponseEntity<UserDTO> findByUsername(@PathVariable("username") String username) {
+        try {
+            UserDTO userDTO = userService.findByUsername(username);
+            return ResponseEntity.ok(userDTO);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
     @DeleteMapping("id/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
+    public ResponseEntity<String> delete(@PathVariable("id") Long id){
         try {
             userService.delete(id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok("User deleted successfully");
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found: " + e.getMessage());
         }
     }
 }

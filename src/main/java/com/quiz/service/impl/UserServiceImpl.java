@@ -1,11 +1,8 @@
 package com.quiz.service.impl;
 
-
-import com.quiz.dto.CreateUserRequest;
 import com.quiz.dto.UserDTO;
 import com.quiz.entity.RoleEntity;
 import com.quiz.entity.UserEntity;
-import com.quiz.entity.UserRole;
 import com.quiz.exceptions.notFound.EntityNotFoundException;
 import com.quiz.mapper.UserMapper;
 import com.quiz.repository.UserRepository;
@@ -14,6 +11,7 @@ import com.quiz.service.UserService;
 import com.quiz.util.PasswordValidator;
 import com.quiz.util.UsernameValidator;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,10 +21,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -36,8 +36,8 @@ public class UserServiceImpl implements UserService {
         //validate password
         PasswordValidator.validate(userDTO.getPassword());
 
-        //encode the password before saving (nuk e kam bere akoma pjesen e security)
-        //user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //encode the password before saving
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
         // Fetch the role by ID
         RoleEntity role = roleRepository.findById(roleId)
@@ -59,6 +59,15 @@ public class UserServiceImpl implements UserService {
             return UserMapper.toDTO(user);
         }
         throw new EntityNotFoundException("User with id "+id+ " was not found");
+    }
+
+    @Override
+    public UserDTO findByUsername(String username) {
+        UserEntity user = this.userRepository.findByUsername(username);
+        if (user != null) {
+            return UserMapper.toDTO(user);
+        }
+        throw new EntityNotFoundException("User with username " + username + " was not found");
     }
 
     @Override
