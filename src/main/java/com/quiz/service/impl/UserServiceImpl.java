@@ -11,7 +11,6 @@ import com.quiz.service.UserService;
 import com.quiz.util.PasswordValidator;
 import com.quiz.util.UsernameValidator;
 import jakarta.transaction.Transactional;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,13 +20,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    this.userRepository = userRepository;
+    this.roleRepository = roleRepository;
+}
 
     @Override
     public void save(UserDTO userDTO, Long roleId) {
@@ -37,7 +34,7 @@ public class UserServiceImpl implements UserService {
         PasswordValidator.validate(userDTO.getPassword());
 
         //encode the password before saving
-        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+//        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
         // Fetch the role by ID
         RoleEntity role = roleRepository.findById(roleId)

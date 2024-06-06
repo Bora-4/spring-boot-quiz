@@ -19,25 +19,19 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody UserDTO userDTO, @RequestParam Long roleId) {
+    @PostMapping
+    public ResponseEntity<String> createUser(@RequestBody UserDTO userDTO, @RequestParam Long roleId) {
         try {
             userService.save(userDTO, roleId);
-            return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+            return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
         } catch (UsernameRequirementsException | PasswordRequirementsException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to register user: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to create user: " + e.getMessage());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + e.getMessage());
         }
     }
-
-    @PostMapping("/login")
-    public ResponseEntity<String> login() {
-        return ResponseEntity.ok("Logged in successfully");
-    }
-
 
     @PutMapping
     public ResponseEntity<String> update(@RequestBody UserDTO userDTO){
@@ -95,4 +89,24 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found: " + e.getMessage());
         }
     }
+
+//    @PostMapping("/signup")
+//    public ResponseEntity<String> signup(@RequestBody UserDTO userDTO, @RequestParam Long roleId) {
+//        try {
+//            userService.save(userDTO, roleId);
+//            return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+//        } catch (UsernameRequirementsException | PasswordRequirementsException e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to register user: " + e.getMessage());
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: " + e.getMessage());
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + e.getMessage());
+//        }
+//    }
+//
+//    @PostMapping("/login")
+//    public ResponseEntity<String> login() {
+//        return ResponseEntity.ok("Logged in successfully");
+//    }
+
 }
