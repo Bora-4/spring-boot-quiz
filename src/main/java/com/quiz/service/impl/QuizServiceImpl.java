@@ -50,8 +50,11 @@ public class QuizServiceImpl implements QuizService {
         QuizEntity quiz = quizRepository.findById(quizDTO.getId());
         if(quiz != null){
             quizRepository.update(quiz);
+        } else {
+            throw new EntityNotFoundException("Quiz with id " + quizDTO.getId() + " was not found");
         }
-        throw new EntityNotFoundException("Quiz with id "+quizDTO.getId()+" was not found");
+        quiz.setTitle(quizDTO.getTitle());
+        quizRepository.save(quiz);
     }
 
     @Override
@@ -62,6 +65,12 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public void delete(Long id) {
-        this.quizRepository.delete(id);
+        QuizEntity quiz = quizRepository.findById(id);
+        if(quiz != null) {
+            this.quizRepository.delete(id);
+        } else {
+            throw new EntityNotFoundException("Quiz with id "+id+" was not found.");
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-package com.quiz.service.impl;
+//package com.quiz.service.impl;
 
 //import com.quiz.entity.UserEntity;
 //import com.quiz.repository.UserRepository;

@@ -15,6 +15,10 @@ public class UserMapper {
     }
 
     public static UserEntity toEntity(UserDTO userDTO, RoleEntity role) {
+        if (userDTO == null || role == null) {
+            throw new NullPointerException("UserDTO and RoleEntity cannot be null");
+        }
+
         UserEntity user = new UserEntity();
         user.setId(userDTO.getId());
         user.setEmail(userDTO.getEmail());
@@ -42,6 +46,10 @@ public class UserMapper {
     }
 
     public static UserDTO toDTO(UserEntity user) {
+        if (user == null) {
+            throw new NullPointerException("UserEntity cannot be null");
+        }
+
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setEmail(user.getEmail());
@@ -61,6 +69,10 @@ public class UserMapper {
     }
 
     public static RoleDTO toRoleDTO(RoleEntity role) {
+        if (role == null) {
+            throw new NullPointerException("RoleEntity cannot be null");
+        }
+
         RoleDTO roleDTO = new RoleDTO();
         roleDTO.setId(role.getId());
         roleDTO.setName(role.getName());
@@ -68,6 +80,10 @@ public class UserMapper {
     }
 
     public static RoleEntity toRoleEntity(RoleDTO roleDTO) {
+        if (roleDTO == null) {
+            throw new NullPointerException("RoleDTO cannot be null");
+        }
+
         RoleEntity role = new RoleEntity();
         role.setId(roleDTO.getId());
         role.setName(roleDTO.getName());

@@ -64,6 +64,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void delete(Long id) {
-        this.questionRepository.delete(id);
+        QuestionEntity question = questionRepository.findById(id);
+        if (question == null) {
+            throw new EntityNotFoundException("Question with id " + id + " was not found");
+        }
+        questionRepository.delete(id);
     }
+
 }
