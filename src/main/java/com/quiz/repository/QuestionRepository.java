@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+
 public interface QuestionRepository {
     void save(QuestionEntity question);
     QuestionEntity findById(Long id);

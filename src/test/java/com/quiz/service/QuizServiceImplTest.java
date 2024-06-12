@@ -22,6 +22,9 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 public class QuizServiceImplTest {
+
+    //In mocking, the dependencies are replaced by closely controlled replacements
+    // objects that simulate the behavior of the real ones
     @Mock //creates mock instances of repositories
     private QuizRepository quizRepository;
 
@@ -46,6 +49,7 @@ public class QuizServiceImplTest {
 
     @Test
     void saveQuiz_success(){
+
 
         when(userRepository.findById(anyLong())).thenReturn(userEntity);
 

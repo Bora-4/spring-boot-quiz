@@ -20,30 +20,17 @@ public class QuizResultController {
 
     @PostMapping
     public ResponseEntity<String> save(@RequestBody QuizResultDTO quizResultDTO){
-        try {
-            quizResultService.save(quizResultDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Quiz result saved successfully");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: " + e.getMessage());
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + e.getMessage());
-        }
+
+        quizResultService.save(quizResultDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Quiz result saved successfully");
     }
 
     @PutMapping
     public ResponseEntity<String> update(@RequestBody QuizResultDTO quizResultDTO){
-        try {
-            quizResultService.update(quizResultDTO);
-            return ResponseEntity.ok("Quiz result updated successfully");
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: " + e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + e.getMessage());
-        }
+
+        quizResultService.update(quizResultDTO);
+        return ResponseEntity.ok("Quiz result updated successfully");
+
     }
 
     @GetMapping
@@ -53,29 +40,16 @@ public class QuizResultController {
 
     @GetMapping("id/{id}")
     public ResponseEntity<QuizResultDTO> findById(@PathVariable("id") Long id){
-        try {
-            QuizResultDTO quizResultDTO = quizResultService.findById(id);
-            return ResponseEntity.ok(quizResultDTO);
-        } catch (EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        } catch (IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+
+        QuizResultDTO quizResultDTO = quizResultService.findById(id);
+        return ResponseEntity.ok(quizResultDTO);
     }
 
     @DeleteMapping("id/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id){
-        try {
-            quizResultService.delete(id);
-            return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+
+        quizResultService.delete(id);
+        return ResponseEntity.noContent().build();
+
     }
 }

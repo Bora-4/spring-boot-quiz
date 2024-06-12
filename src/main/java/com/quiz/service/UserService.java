@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface UserService {
     void save(UserDTO userDTO, Long roleId);
     UserDTO findById(Long id);

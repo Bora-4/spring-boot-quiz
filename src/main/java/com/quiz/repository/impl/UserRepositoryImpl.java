@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
-    @PersistenceContext
+    @PersistenceContext // keeps track of any changes made into a managed entity
     EntityManager em;
     @Override
     public void save(UserEntity userEntity) {

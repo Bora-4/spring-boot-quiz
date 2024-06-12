@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+// Global exception -->  a type of workflow designed to determine the project's behavior when encountering an exe error
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)

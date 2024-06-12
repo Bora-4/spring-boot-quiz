@@ -1,6 +1,5 @@
 package com.quiz.mapper;
 import com.quiz.dto.QuestionDTO;
-import com.quiz.dto.QuizDTO;
 import com.quiz.entity.QuestionEntity;
 import com.quiz.entity.QuizEntity;
 import org.junit.jupiter.api.Test;

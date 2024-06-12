@@ -21,31 +21,17 @@ public class UserController {
     }
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody UserDTO userDTO, @RequestParam Long roleId) {
-        try {
-            userService.save(userDTO, roleId);
-            return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
-        } catch (UsernameRequirementsException | PasswordRequirementsException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to create user: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: " + e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + e.getMessage());
-        }
+
+        userService.save(userDTO, roleId);
+        // e kam bere te kthej nje string per ta bere me te qarte ne prezantim qe metodat jane kryer me sukses
+        return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
+
     }
 
     @PutMapping
     public ResponseEntity<String> update(@RequestBody UserDTO userDTO){
-        try {
-            userService.update(userDTO);
-            return ResponseEntity.ok("User updated successfully");
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: " + e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: "
-                    + e.getMessage());
-        }
+        userService.update(userDTO);
+        return ResponseEntity.ok("User updated successfully");
     }
 
     @GetMapping
@@ -54,40 +40,23 @@ public class UserController {
     }
     @GetMapping("id/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable("id") Long id){
-        try {
-            UserDTO userDTO = userService.findById(id);
-            return ResponseEntity.ok(userDTO);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+        UserDTO userDTO = userService.findById(id);
+        return ResponseEntity.ok(userDTO);
+
     }
 
     @GetMapping("/username/{username}")
     public ResponseEntity<UserDTO> findByUsername(@PathVariable("username") String username) {
-        try {
-            UserDTO userDTO = userService.findByUsername(username);
-            return ResponseEntity.ok(userDTO);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+
+        UserDTO userDTO = userService.findByUsername(username);
+        return ResponseEntity.ok(userDTO);
     }
 
     @DeleteMapping("id/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id){
-        try {
-            userService.delete(id);
-            return ResponseEntity.ok("User deleted successfully");
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found: " + e.getMessage());
-        }
+
+        userService.delete(id);
+        return ResponseEntity.ok("User deleted successfully");
     }
 
 //    @PostMapping("/signup")
